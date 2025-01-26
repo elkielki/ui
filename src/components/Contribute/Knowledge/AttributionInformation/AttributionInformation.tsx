@@ -7,6 +7,7 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons';
 interface Props {
   reset: boolean;
   isEditForm?: boolean;
+  required: boolean;
   knowledgeFormData: KnowledgeFormData;
   setDisableAction: React.Dispatch<React.SetStateAction<boolean>>;
   titleWork: string;
@@ -24,6 +25,7 @@ interface Props {
 const AttributionInformation: React.FC<Props> = ({
   reset,
   isEditForm,
+  required,
   knowledgeFormData,
   setDisableAction,
   titleWork,
@@ -70,7 +72,9 @@ const AttributionInformation: React.FC<Props> = ({
       return;
     }
     setDisableAction(true);
-    setValidTitle(ValidatedOptions.error);
+    if (required) {
+      setValidTitle(ValidatedOptions.error);
+    }
     return;
   };
 
@@ -78,7 +82,9 @@ const AttributionInformation: React.FC<Props> = ({
     const link = linkStr.trim();
     if (link.length === 0) {
       setDisableAction(true);
-      setValidLink(ValidatedOptions.error);
+      if (required) {
+        setValidLink(ValidatedOptions.error);
+      }
       return;
     }
     try {
@@ -101,7 +107,9 @@ const AttributionInformation: React.FC<Props> = ({
       return;
     }
     setDisableAction(true);
-    setValidRevision(ValidatedOptions.error);
+    if (required) {
+      setValidRevision(ValidatedOptions.error);
+    }
     return;
   };
 
@@ -113,7 +121,9 @@ const AttributionInformation: React.FC<Props> = ({
       return;
     }
     setDisableAction(true);
-    setValidLicense(ValidatedOptions.error);
+    if (required) {
+      setValidLicense(ValidatedOptions.error);
+    }
     return;
   };
 
@@ -125,7 +135,9 @@ const AttributionInformation: React.FC<Props> = ({
       return;
     }
     setDisableAction(true);
-    setValidCreators(ValidatedOptions.error);
+    if (required) {
+      setValidCreators(ValidatedOptions.error);
+    }
     return;
   };
 
@@ -135,16 +147,17 @@ const AttributionInformation: React.FC<Props> = ({
         titleText={{
           text: (
             <p>
-              Attribution Information <span style={{ color: 'red' }}>*</span>
+              Attribution Information 
+              {required && <span style={{ color: 'red' }}>*</span>}
             </p>
           ),
           id: 'attribution-info-id'
         }}
         titleDescription="Provide attribution information."
       />
-      <FormGroup isRequired key={'attribution-info-details-work_link'} label="Work link or URL">
+      <FormGroup isRequired={required} key={'attribution-info-details-work_link'} label="Work link or URL">
         <TextInput
-          isRequired
+          isRequired={required}
           type="url"
           aria-label="link_work"
           placeholder="Enter link to work"
@@ -153,7 +166,7 @@ const AttributionInformation: React.FC<Props> = ({
           onChange={(_event, value) => setLinkWork(value)}
           onBlur={() => validateLink(linkWork)}
         />
-        {validLink === ValidatedOptions.error && (
+        {required && validLink === ValidatedOptions.error && (
           <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={validLink}>
@@ -172,7 +185,7 @@ const AttributionInformation: React.FC<Props> = ({
           </FormHelperText>
         )}
       </FormGroup>
-      <FormGroup isRequired key={'attribution-info-details-title_work'} label="Work title">
+      <FormGroup isRequired={required} key={'attribution-info-details-title_work'} label="Work title">
         <TextInput
           isRequired
           type="text"
@@ -183,7 +196,7 @@ const AttributionInformation: React.FC<Props> = ({
           onChange={(_event, value) => setTitleWork(value)}
           onBlur={() => validateTitle(titleWork)}
         />
-        {validTitle === ValidatedOptions.error && (
+        {required && validTitle === ValidatedOptions.error && (
           <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={validTitle}>
@@ -193,7 +206,7 @@ const AttributionInformation: React.FC<Props> = ({
           </FormHelperText>
         )}
       </FormGroup>
-      <FormGroup isRequired key={'attribution-info-details-document_revision'} label="Document revision">
+      <FormGroup isRequired={required} key={'attribution-info-details-document_revision'} label="Document revision">
         <TextInput
           isRequired
           type="text"
@@ -204,7 +217,7 @@ const AttributionInformation: React.FC<Props> = ({
           onChange={(_event, value) => setRevision(value)}
           onBlur={() => validateRevision(revision)}
         />
-        {validRevision === ValidatedOptions.error && (
+        {required && validRevision === ValidatedOptions.error && (
           <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={validRevision}>
@@ -214,9 +227,9 @@ const AttributionInformation: React.FC<Props> = ({
           </FormHelperText>
         )}
       </FormGroup>
-      <FormGroup isRequired key={'attribution-info-details-license'} label="License">
+      <FormGroup isRequired={required} key={'attribution-info-details-license'} label="License">
         <TextInput
-          isRequired
+          isRequired={required}
           type="text"
           aria-label="license_work"
           placeholder="Enter license of the work"
@@ -225,7 +238,7 @@ const AttributionInformation: React.FC<Props> = ({
           onChange={(_event, value) => setLicenseWork(value)}
           onBlur={() => validateLicense(licenseWork)}
         />
-        {validLicense === ValidatedOptions.error && (
+        {required && validLicense === ValidatedOptions.error && (
           <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={validLicense}>
@@ -235,9 +248,9 @@ const AttributionInformation: React.FC<Props> = ({
           </FormHelperText>
         )}
       </FormGroup>
-      <FormGroup isRequired key={'attribution-info-details-creators'} label="Creators name">
+      <FormGroup isRequired={required} key={'attribution-info-details-creators'} label="Creators name">
         <TextInput
-          isRequired
+          isRequired={required}
           type="text"
           aria-label="creators"
           placeholder="Enter creators Name"
@@ -246,7 +259,7 @@ const AttributionInformation: React.FC<Props> = ({
           onChange={(_event, value) => setCreators(value)}
           onBlur={() => validateCreators(creators)}
         />
-        {validCreators === ValidatedOptions.error && (
+        {required && validCreators === ValidatedOptions.error && (
           <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={validCreators}>

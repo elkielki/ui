@@ -417,6 +417,7 @@ export const SkillFormGithub: React.FunctionComponent<SkillFormProps> = ({ skill
         <AttributionInformation
           reset={reset}
           isEditForm={skillEditFormData?.isEditForm}
+          required={true}
           skillFormData={skillFormData}
           setDisableAction={setDisableAction}
           titleWork={titleWork}

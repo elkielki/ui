@@ -89,6 +89,9 @@ export const SkillFormNative: React.FunctionComponent<SkillFormProps> = ({ skill
   const [actionGroupAlertContent, setActionGroupAlertContent] = useState<ActionGroupAlertContent | undefined>();
   const [disableAction, setDisableAction] = useState<boolean>(true);
   const [reset, setReset] = useState<boolean>(false);
+
+  const [required, setRequired] = useState<boolean>(false);
+
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [activeStepIndex] = useState<number>(1);
   const router = useRouter();
@@ -395,6 +398,7 @@ export const SkillFormNative: React.FunctionComponent<SkillFormProps> = ({ skill
         <AttributionInformation
           reset={reset}
           isEditForm={skillEditFormData?.isEditForm}
+          required={false}
           skillFormData={skillFormData}
           setDisableAction={setDisableAction}
           titleWork={titleWork}

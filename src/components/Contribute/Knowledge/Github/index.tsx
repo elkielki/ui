@@ -544,6 +544,7 @@ export const KnowledgeFormGithub: React.FunctionComponent<KnowledgeFormProps> = 
         <AttributionInformation
           reset={reset}
           isEditForm={knowledgeEditFormData?.isEditForm}
+          required={true}
           knowledgeFormData={knowledgeFormData}
           setDisableAction={setDisableAction}
           titleWork={titleWork}

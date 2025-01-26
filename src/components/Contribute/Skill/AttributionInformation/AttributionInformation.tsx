@@ -7,6 +7,7 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons';
 interface Props {
   reset: boolean;
   isEditForm?: boolean;
+  required: boolean;
   skillFormData: SkillFormData;
   setDisableAction: React.Dispatch<React.SetStateAction<boolean>>;
   titleWork: string;
@@ -20,6 +21,7 @@ interface Props {
 const AttributionInformation: React.FC<Props> = ({
   reset,
   isEditForm,
+  required,
   skillFormData,
   setDisableAction,
   titleWork,
@@ -55,7 +57,9 @@ const AttributionInformation: React.FC<Props> = ({
       return;
     }
     setDisableAction(true);
-    setValidTitle(ValidatedOptions.error);
+    if (required) {
+      setValidTitle(ValidatedOptions.error);
+    }
     return;
   };
 
@@ -67,7 +71,9 @@ const AttributionInformation: React.FC<Props> = ({
       return;
     }
     setDisableAction(true);
-    setValidLicense(ValidatedOptions.error);
+    if (required) {
+      setValidLicense(ValidatedOptions.error);
+    }
     return;
   };
 
@@ -79,20 +85,23 @@ const AttributionInformation: React.FC<Props> = ({
       return;
     }
     setDisableAction(true);
-    setValidCreators(ValidatedOptions.error);
+    if (required) {
+      setValidCreators(ValidatedOptions.error);
+    }
     return;
   };
 
   return (
     <>
       <h2>
-        <strong>Attribution Information</strong> <span style={{ color: 'red' }}>*</span>
+        <strong>Attribution Information</strong> 
+        {required && <span style={{ color: 'red' }}>*</span>}
       </h2>
       <p>Provide attribution information for the skill.</p>
 
-      <FormGroup isRequired key={'attribution-info-details-title_work'} label="Work title">
+      <FormGroup isRequired={required} key={'attribution-info-details-title_work'} label="Work title">
         <TextInput
-          isRequired
+          isRequired={required}
           type="text"
           aria-label="title_work"
           placeholder="Enter title of work"
@@ -101,7 +110,7 @@ const AttributionInformation: React.FC<Props> = ({
           onChange={(_event, value) => setTitleWork(value)}
           onBlur={() => validateTitle(titleWork)}
         />
-        {validTitle === ValidatedOptions.error && (
+        {required && (validTitle === ValidatedOptions.error) && (
           <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={validTitle}>
@@ -111,9 +120,9 @@ const AttributionInformation: React.FC<Props> = ({
           </FormHelperText>
         )}
       </FormGroup>
-      <FormGroup isRequired key={'attribution-info-details-license_work'} label="Work License">
+      <FormGroup isRequired={required} key={'attribution-info-details-license_work'} label="Work License">
         <TextInput
-          isRequired
+          isRequired={required}
           type="text"
           aria-label="license_work"
           placeholder="Enter license of the work"
@@ -122,7 +131,7 @@ const AttributionInformation: React.FC<Props> = ({
           onChange={(_event, value) => setLicenseWork(value)}
           onBlur={() => validateLicense(licenseWork)}
         />
-        {validLicense === ValidatedOptions.error && (
+        {required && validLicense === ValidatedOptions.error && (
           <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={validLicense}>
@@ -132,9 +141,9 @@ const AttributionInformation: React.FC<Props> = ({
           </FormHelperText>
         )}
       </FormGroup>
-      <FormGroup isRequired key={'attribution-info-details-creators'} label="Creators name">
+      <FormGroup isRequired={required} key={'attribution-info-details-creators'} label="Creators name">
         <TextInput
-          isRequired
+          isRequired={required}
           type="text"
           aria-label="creators"
           placeholder="Enter creators Name"
@@ -143,7 +152,7 @@ const AttributionInformation: React.FC<Props> = ({
           onChange={(_event, value) => setCreators(value)}
           onBlur={() => validateCreators(creators)}
         />
-        {validCreators === ValidatedOptions.error && (
+        {required && validCreators === ValidatedOptions.error && (
           <FormHelperText>
             <HelperText>
               <HelperTextItem icon={<ExclamationCircleIcon />} variant={validCreators}>
