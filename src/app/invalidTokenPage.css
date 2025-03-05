@@ -1,0 +1,40 @@
+a {
+    color: white;
+    text-decoration: underline;
+  }
+  
+  .invalid-token-page-background {
+    background-image: url('../../public/InstructLab-Background-Image.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #454b9a;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+  
+  .invalid-text-container {
+    text-align: center;
+    font-size: medium !important;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+  }
+  
+  .title {
+    margin-top: 1rem;
+    color: white !important;
+    padding: 20px;
+  }
+  
+  .invalid-text {
+    margin-top: 1rem;
+    color: white !important;
+    padding-bottom: 50px;
+    font-size: large !important;
+  }

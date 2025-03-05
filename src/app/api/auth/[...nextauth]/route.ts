@@ -105,7 +105,6 @@ const authOptions: NextAuthOptions = {
               return [204, 302, 404].includes(status);
             }
           });
-
           if (response.status === 204) {
             console.log(`User ${githubProfile.login} successfully authenticated with GitHub organization - ${ORG}`);
             logger.info(`User ${githubProfile.login} successfully authenticated with GitHub organization - ${ORG}`);
@@ -127,6 +126,10 @@ const authOptions: NextAuthOptions = {
               data: error.response?.data,
               status: error.response?.status
             });
+            if (error.response?.status == 401) {
+              console.log("Test entered the path");
+              return `/login?error=InvalidToken`;
+            }
           } else {
             logger.error(`Error fetching GitHub organization membership for user ${githubProfile.login}: ${error}`);
           }

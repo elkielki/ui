@@ -6,11 +6,16 @@ import './githublogin.css';
 import NativeLogin from '@/app/login/nativelogin';
 import GithubLogin from '@/app/login/githublogin';
 import DevModeLogin from './devmodelogin';
+import InvalidTokenPage from '../invalidTokenPage';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const Login: React.FunctionComponent = () => {
   const [deploymentType, setDeploymentType] = useState<string | 'github'>();
   const [isDevModeEnabled, setIsDevModeEnabled] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
 
   useEffect(() => {
     const chooseLoginPage = async () => {
@@ -19,7 +24,8 @@ const Login: React.FunctionComponent = () => {
         const envConfig = await res.json();
         setDeploymentType(envConfig.DEPLOYMENT_TYPE);
         setIsDevModeEnabled(envConfig.ENABLE_DEV_MODE === 'true');
-      } catch (error) {
+        }
+      catch (error) {
         console.error('Error fetching environment config:', error);
         setDeploymentType('github');
       } finally {
@@ -28,6 +34,10 @@ const Login: React.FunctionComponent = () => {
     };
     chooseLoginPage();
   }, []);
+
+  if (error === 'InvalidToken') {
+    return <InvalidTokenPage />;
+  }
 
   // Don't render the page until the useEffect finishes fetching environment data
   if (isLoading || deploymentType === null) {
